@@ -28,5 +28,13 @@ namespace camiones_antioquia.Controllers
             return upload.DescargarArchivo(NombreImagen);
         }
 
+        [HttpPut]
+        public async Task<HttpResponseMessage> ActualizarArchivo(HttpRequestMessage request)
+        {
+            clsUpload upload = new clsUpload();
+            upload.request = request;
+            return await upload.GrabarArchivo(true);
+        }
+
     }
 }
