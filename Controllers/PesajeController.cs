@@ -13,6 +13,15 @@ namespace camiones_antioquia.Controllers
     [RoutePrefix("api/pesaje")]
     public class PesajeController : ApiController
     {
+
+        [HttpGet]
+        [Route("ConsultarImagenes")]
+        public IQueryable ConsultarImagenes(string PlacaCamion)
+        {
+            clsPesaje pesaje = new clsPesaje();
+            return pesaje.ListarImagenes(PlacaCamion);
+        }
+
         [HttpGet]
         [Route("consultar")]
         public Pesaje Consultar(int id)
@@ -28,6 +37,7 @@ namespace camiones_antioquia.Controllers
             clsPesaje Pesaje = new clsPesaje();
             Pesaje.pesaje = pesaje;
             return Pesaje.InsertarPesaje();
+        
         }
 
         [HttpPut]

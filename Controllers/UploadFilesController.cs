@@ -18,7 +18,15 @@ namespace camiones_antioquia.Controllers
             clsUpload upload = new clsUpload();
             upload.Datos = Datos;
             upload.request = request;
-            return await upload.GrabarArchivo();
+            return await upload.GrabarArchivo(false);
         }
+
+        [HttpGet]
+        public HttpResponseMessage ConsultarArchivo(string NombreImagen)
+        {
+            clsUpload upload = new clsUpload();
+            return upload.DescargarArchivo(NombreImagen);
+        }
+
     }
 }

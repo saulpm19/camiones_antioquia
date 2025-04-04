@@ -100,7 +100,28 @@ namespace camiones_antioquia.Clases
             {
                 return "Error al grabar la imagen: " + ex.Message;
             }
-            
+        }
+
+
+        public IQueryable ListarImagenes(string PlacaCamion)
+        {
+            return from P in dbcamiones_antioquia.Set<Pesaje>()
+                   join C in dbcamiones_antioquia.Set<Camion>()
+                   on P.PlacaCamion equals C.Placa
+                   join F in dbcamiones_antioquia.Set<FotoPesaje>()
+                   on P.id equals F.idPesaje
+                   where P.PlacaCamion == PlacaCamion
+                   orderby F.ImagenVehiculo
+                   select new
+                   {
+                       PlacaCamion = P.PlacaCamion,
+                       NumeroEjes = C.NumeroEjes,
+                       Marca = C.Marca,
+                       FechaPesaje = P.FechaPesaje,
+                       Peso = P.Peso,
+                       ImagenVehiculo=F.ImagenVehiculo
+                   };
         }
     }
+    
 }
