@@ -1,0 +1,86 @@
+﻿using camiones_antioquia.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using System.Web;
+
+namespace camiones_antioquia.Clases
+{
+    public class clsPesaje
+    {
+        private camiones_antioquiaEntities dbcamiones_antioquia = new camiones_antioquiaEntities(); // atributo que gestiona conexion a la BD
+
+        public Pesaje pesaje { get; set; } //propiedad para manipular la info en la BD
+
+        public string InsertarPesaje()
+        {
+            try
+            {
+                
+                dbcamiones_antioquia.Pesajes.Add(pesaje); //agregar el pesaje a la BD
+                dbcamiones_antioquia.SaveChanges(); //guardar los cambios en la BD
+                return "Pesaje registrado correctamente";
+            }
+            catch (Exception ex)
+            {
+                return "Error al registrar el pesaje: " + ex.Message;
+            }
+        }
+
+        public string ActualizarPesaje()
+        {
+            try
+            {
+                Pesaje pesa = consultar(pesaje.id); //consultar el pesaje en la BD
+                if (pesa != null) //verificar si el pesaje existe
+                {
+                    dbcamiones_antioquia.Pesajes.AddOrUpdate(pesaje);
+                    dbcamiones_antioquia.SaveChanges(); //guardar los cambios en la BD
+                    return "Pesaje actualizado correctamente";
+                }
+                else
+                {
+                    return "Pesaje no encontrado";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Error al actualizar el pesaje: " + ex.Message;
+            }
+                       
+
+        }
+
+        public Pesaje consultar(int id)
+        {
+            return dbcamiones_antioquia.Pesajes.FirstOrDefault(p => p.id == id); //consultar el pesaje en la BD
+        }
+
+        public string EliminarPesaje()
+        {
+            try
+            {
+                Pesaje pesa = consultar(pesaje.id); //consultar el pesaje en la BD
+                if (pesa != null) //verificar si el pesaje existe
+                {
+                    dbcamiones_antioquia.Pesajes.Remove(pesa); //eliminar el pesaje de la BD
+                    dbcamiones_antioquia.SaveChanges(); //guardar los cambios en la BD
+                    return "Pesaje eliminado correctamente";
+
+                }
+                else
+                {
+                    return "Pesaje no encontrado";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Error al eliminar el pesaje: " + ex.Message;
+            }
+
+                   
+        }
+
+    }
+}
