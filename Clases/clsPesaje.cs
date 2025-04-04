@@ -82,5 +82,25 @@ namespace camiones_antioquia.Clases
                    
         }
 
+        public string GrabarImagenPesaje(int id, List<string> imagenes)
+        {
+            try
+            {
+                foreach (string imagen in imagenes)
+                {
+                    FotoPesaje imagenProducto = new FotoPesaje();
+                    imagenProducto.idPesaje = id;
+                    imagenProducto.ImagenVehiculo = imagen;
+                    dbcamiones_antioquia.FotoPesajes.Add(imagenProducto);
+                    dbcamiones_antioquia.SaveChanges();
+                }
+                return "Se grabó la información en la base de datos";
+            }
+            catch (Exception ex)
+            {
+                return "Error al grabar la imagen: " + ex.Message;
+            }
+            
+        }
     }
 }
